@@ -1,4 +1,4 @@
-import VueRouter from "D:/Node.js/node_global/node_modules/vue-router"
+import VueRouter from "vue-router"
 import Vue from 'vue'
 
 import UsersLogin from '../components/UsersLogin'
