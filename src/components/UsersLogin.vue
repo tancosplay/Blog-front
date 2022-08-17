@@ -61,7 +61,7 @@
     min-height: 100vh;
     margin: 0;
     padding: 0;
-    background-image: url("E:/QQ图片20220814114333.jpg");
+    background-image: url("../assets/QQ图片20220814114333.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     height: 100%;
