@@ -1,13 +1,53 @@
 <template>
-  <div></div>
+  <div id="WriteMain">
+    <mavon-editor v-model="value" @save="$save" placeholder=" "/>
+  </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
  export default {
-     name: 'UserWrite'
+     name: 'UserWrite',
+     data () {
+         return {
+             value: this.$route.params.value
+         }
+     },
+
+     computed: {
+      ...mapState({
+        message: state => {
+          return state.message
+        }
+      })
+     }, 
+
+     methods: {
+      $save(v) {
+        const title = window.prompt("请输入标题");
+        // eslint-disable-next-line no-unused-vars
+        console.log(v)
+        this.$store.dispatch('updateUserMessage', {title, v})
+      }
+     },
+
+     mounted () {
+         console.log(this.$route.params.value)
+     }
  }
 </script>
 
 <style>
-  
+ #WriteMain {
+    width:92%;
+    height: 88%;
+    justify-content: center;
+    margin-top: 2%;
+    display: flex;
+ }
+
+ #WriteMain > div {
+  width: 100%;
+  height: 100%;
+ } 
 </style>

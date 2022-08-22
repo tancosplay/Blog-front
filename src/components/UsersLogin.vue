@@ -36,8 +36,19 @@
       },
 
       computed: {
-        UserPassword() {
+        message() {
           return JSON.parse(localStorage.getItem(this.UserInputName)) || ''
+        },
+
+        essayNum() {
+          return this.message.essayNum
+        },
+        UserPassword() {
+          try {
+            return this.message.password
+          } catch (error) {
+              return ''
+          } 
         },
 
         check() {

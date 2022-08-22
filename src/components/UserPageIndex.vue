@@ -6,34 +6,17 @@
           <span id="UserIndexName">{{$route.params.UserInputName}}</span>
         </div>
         <div id="top-right">
-          <a href="" class="UserFunc">
-            <font-awesome-icon icon="fa-solid fa-book-open" size="10x" v-show="write_Read"/>
-            <font-awesome-icon icon="fa-solid fa-pen-to-square" size="10x" v-show="!write_Read"/>
-          </a>
+          <router-link  :to="{name: 'UserView'}" v-if="write_read">
+            <font-awesome-icon icon="fa-solid fa-book-open" size="10x"/></router-link>
+          <router-link :to="{name: 'UserWrite', params:{value: ' '}}" v-if="!write_read">
+            <font-awesome-icon icon="fa-solid fa-pen-to-square" size="10x"/>
+          </router-link>
           <router-link :to="{name: 'UsersLogin'}">
             <font-awesome-icon icon="fas fa-reply" size="10x"/>
           </router-link>
         </div>
     </div>
-    <div id="main">
-        <div id="left">
-            <p>文章？？？</p>
-            <ul>
-              <li>关于vue</li><hr>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-            </ul>
-        </div>
-        <div id="right">
-            文章
-        </div>
-    </div>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -42,8 +25,26 @@
      name: 'UserPageIndex',
      data () {
          return {
-             write_Read: false
+             write_read: false,
+             value: '',
+             userMessage: {}
          }
+     },
+     watch: {
+      $route: {
+        handler(newValue) {
+          if (newValue.name == 'UserWrite') {
+            console.log(newValue);
+            this.write_read = true
+          } else if (newValue.name == 'UserView') {
+            this.write_read = false
+          }
+        }
+      }
+     },
+
+     mounted() {
+      this.$store.dispatch('setUserMessage', this.$route.params.UserInputName)
      }
  }
 </script>
@@ -86,9 +87,13 @@
   margin-right: 2%;
  }
 
+ #top-right > a {
+  margin-left: 20px;
+ }
+
  .UserFunc {
   display: inline;
-  margin-right: 30px;
+  padding-right: 30px;
  }
 
  #UserIndexName {
@@ -114,6 +119,11 @@
    border-radius: 8px;
    background-color: rgba(250, 250, 250, 0.6);
  }
+ 
+ #right > div {
+  width: 100%;
+  height: 100%;
+ } 
 
  ul{
   list-style-type: none;

@@ -43,14 +43,13 @@
 
      data () {
          return {
-             UserNameError: false,
-             passwordError: false,
-             password2Error: false,
+             error: false,
              UserName: '',
              address: '',
              password: '',
              password2: '',
-             arr: JSON.parse(localStorage.getItem('Users')) || []
+             arr: JSON.parse(localStorage.getItem('Users')) || [],
+             personMessage: {}
          }
      },
 
@@ -66,7 +65,7 @@
 
       checkUserName() {
         if (!(this.UserName.trim() && this.arr.every(item => item != this.UserName))) {
-          this.UserNameError = true;
+          this.error = true;
           this.showError(this.$refs.UserName);
         } else {
           this.showSuccess(this.$refs.UserName, '用户名符合规范');
@@ -75,7 +74,7 @@
 
       checkPassword() {
         if (this.password.length < 6) {
-          this.passwordError = true;
+          this.error = true;
           this.showError(this.$refs.password)
         } else {
           this.showSuccess(this.$refs.password, '密码符合规范');
@@ -84,7 +83,7 @@
 
       checkPassword2() {
         if (this.password != this.password2) {
-          this.password2Error = true;
+          this.error = true;
           this.showError(this.$refs.password2)
         } else {
           this.showSuccess(this.$refs.password2, '两次密码一致')
@@ -95,12 +94,15 @@
         if (!confirm("确定注册吗？")) {
           return;
         }
-        if (this.UserNameError || this.passwordError || this.password2Error) {
+        if (this.error) {
           alert('信息存在错误');
         } else {
           this.arr.push(this.UserName);
           localStorage.setItem('UsersName', JSON.stringify(this.arr));
-          localStorage.setItem(this.UserName, JSON.stringify(this.password));
+          this.personMessage.password = this.password;
+          this.personMessage.essayNum = 0;
+          console.log(this.personMessage);
+          localStorage.setItem(this.UserName, JSON.stringify(this.personMessage));
           alert('注册成功');
         }
       }
