@@ -32,8 +32,9 @@
      },
      watch: {
       $route: {
-        handler(newValue) {
-          if (newValue.name == 'UserWrite') {
+        handler(oldValue, newValue) {
+          console.log(oldValue, newValue)
+          if (oldValue.name == 'UserWrite') {
             console.log(newValue);
             this.write_read = true
           } else if (newValue.name == 'UserView') {

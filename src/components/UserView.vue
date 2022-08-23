@@ -51,8 +51,10 @@ import { mapState } from 'vuex'
                 if (el.classList.contains('selected')) {
                     el.classList.remove('selected')
                 }
+                if (event.target.parentNode === el || event.target === el) {
+                    el.classList.add('selected')
+                }
              })
-             event.target.parentNode.classList.add('selected')
             this.value = marked(passage.v)
             this.title = passage.title
         }
