@@ -25,28 +25,23 @@
      name: 'UserPageIndex',
      data () {
          return {
-             write_read: false,
+             write_read: !(this.$route.name === 'UserView'),
              value: '',
              userMessage: {}
          }
      },
+
      watch: {
       $route: {
-        handler(oldValue, newValue) {
-          console.log(oldValue, newValue)
-          if (oldValue.name == 'UserWrite') {
-            console.log(newValue);
-            this.write_read = true
-          } else if (newValue.name == 'UserView') {
-            this.write_read = false
-          }
+        handler(_, newValue) {
+          this.write_read =  newValue.name === 'UserView'
         }
       }
      },
 
      mounted() {
       this.$store.dispatch('setUserMessage', this.$route.params.UserInputName)
-     }
+     },
  }
 </script>
 

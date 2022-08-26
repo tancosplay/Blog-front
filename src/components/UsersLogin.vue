@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <form class="form">
-            <h2>登录</h2>
+            <h2 id="loginButton">登录</h2>
             <div class="box">
                 <div class="box">
                     <label for="用户名">用户名</label>
@@ -19,7 +19,6 @@
             </div>
             <div id="temp">
               <router-link :to="{name: 'UsersRegist'}">注册</router-link>
-              <!-- <span>忘记密码？</span> -->
             </div>
         </form>
     </div>
@@ -43,6 +42,7 @@
         essayNum() {
           return this.message.essayNum
         },
+        
         UserPassword() {
           try {
             return this.message.password
@@ -95,7 +95,7 @@
     width: 100%
   }
 
-  h2 {
+  #loginButton {
     text-align: center;
     margin: 0 0 20px;
   }

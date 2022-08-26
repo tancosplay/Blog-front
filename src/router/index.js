@@ -42,7 +42,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     if (from.name != 'UsersLogin' || to.name != 'UserView') {
-        console.log(from.name, to.name)
+        // console.log(from.name, to.name)
         next()
     } else if (to.params.check === 'false') {
         // console.log("%%%%%", to.params.check)

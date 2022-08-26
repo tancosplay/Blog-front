@@ -38,6 +38,7 @@
 </template>
 
 <script>
+ import axios from 'axios'
  export default {
      name: 'UsersRegist',
 
@@ -54,28 +55,36 @@
      },
 
      methods: {
-      showError (small) {
+      showError (small, errorMessage) {
         small.parentElement.className = 'form-control error'
+        small.innerHTML = errorMessage
       },
 
-      showSuccess (small, successMessage) {
+      showSuccess (small, successMessage='') {
         small.parentElement.className = 'form-control success';
         small.innerHTML = successMessage
       },
 
       checkUserName() {
-        if (!(this.UserName.trim() && this.arr.every(item => item != this.UserName))) {
-          this.error = true;
-          this.showError(this.$refs.UserName);
-        } else {
-          this.showSuccess(this.$refs.UserName, '用户名符合规范');
-        }
+        axios.post(`http://localhost:8080/user/check_field?fieldName=username&fieldValue=${this.UserName}`)
+        .then(Response => {
+          if (Response.data.code === 0) {
+            this.showSuccess(this.$refs.UserName)
+          } else {
+            this.error = true
+            this.showError(this.$refs.UserName, Response.data.message)
+          }
+        },
+          Error => {
+            this.error = true
+            alert(Error.message)
+        })
       },
 
       checkPassword() {
         if (this.password.length < 6) {
           this.error = true;
-          this.showError(this.$refs.password)
+          this.showError(this.$refs.password, '密码不规范')
         } else {
           this.showSuccess(this.$refs.password, '密码符合规范');
         }
@@ -84,7 +93,7 @@
       checkPassword2() {
         if (this.password != this.password2) {
           this.error = true;
-          this.showError(this.$refs.password2)
+          this.showError(this.$refs.password2, '两次密码不一致')
         } else {
           this.showSuccess(this.$refs.password2, '两次密码一致')
         }
@@ -97,13 +106,31 @@
         if (this.error) {
           alert('信息存在错误');
         } else {
-          this.arr.push(this.UserName);
-          localStorage.setItem('UsersName', JSON.stringify(this.arr));
-          this.personMessage.password = this.password;
-          this.personMessage.essayNum = 0;
-          console.log(this.personMessage);
-          localStorage.setItem(this.UserName, JSON.stringify(this.personMessage));
-          alert('注册成功');
+          // this.arr.push(this.UserName);
+          // localStorage.setItem('UsersName', JSON.stringify(this.arr));
+          // this.personMessage.password = this.password;
+          // this.personMessage.essayNum = 0;
+          // console.log(this.personMessage);
+          // localStorage.setItem(this.UserName, JSON.stringify(this.personMessage));
+          // alert('注册成功');
+          const info = {
+            username: this.UserName,
+            password: this.password,
+            email: this.address
+          }
+          console.log(info)
+          axios.post('http://localhost:8080/user/register', info)
+               .then(Response => {
+                switch (Response.data.code) {
+                  case 0:
+                    alert('注册成功');
+                    break;
+                  case 1:
+                     this.showError(this.$refs.UserName, Response.data.message)
+                }
+               }, Error => {
+                  alert(Error.message)
+               })
         }
       }
      }

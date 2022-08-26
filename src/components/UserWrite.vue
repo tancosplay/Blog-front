@@ -26,14 +26,9 @@ import { mapState } from 'vuex';
       $save(v) {
         const title = window.prompt("请输入标题");
         // eslint-disable-next-line no-unused-vars
-        console.log(v)
         this.$store.dispatch('updateUserMessage', {title, v})
       }
      },
-
-     mounted () {
-         console.log(this.$route.params.value)
-     }
  }
 </script>
 

@@ -15,7 +15,7 @@
             </ul>
         </div>
         <div id="right"> 
-            <h4>{{title}}</h4>
+            <h4 id="passageTitle">{{title}}</h4>
             <div v-html="value"></div>
         </div>
     </div>
@@ -37,7 +37,6 @@ import { mapState } from 'vuex'
     computed: {
         ...mapState({
             message: state => {
-                console.log(state.message)
                 return state.message
             }
         })
@@ -59,7 +58,6 @@ import { mapState } from 'vuex'
             this.title = passage.title
         }
     },
-
  }
 </script>
 
@@ -99,5 +97,10 @@ import { mapState } from 'vuex'
 
     .selected .rewrite {
         display: block;
+    }
+
+
+    #left, #right {
+        height: 94%
     }
 </style>

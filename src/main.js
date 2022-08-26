@@ -9,6 +9,8 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { 
     faReply, faCircleUser, faPenToSquare, faBookOpen, faFilePen
 } from "@fortawesome/free-solid-svg-icons"
+// eslint-disable-next-line no-unused-vars
+import axios from 'axios'
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(mavonEditor)
